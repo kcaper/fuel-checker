@@ -45,12 +45,14 @@ class WOG(FillingStation):
             resp = self._fetch_url(url)
             if resp.status_code == 200:
                 name = s['name']
-                station_info = ';\n'.join(self._parse(resp, fuel))
-                info.append(f'{name}:\n{station_info}')
+                found_fuel = self._parse(resp, fuel)
+                if found_fuel:
+                    station_info = ';\n'.join(found_fuel)
+                    info.append(f'{name}:\n{station_info}')
             else:
                 print(f'{resp} {resp.reason} {resp.json()}')
 
         return ';\n'.join(info)
 
     def check(self, fuel: str, city: str) -> str:
-        return self._check(fuel, city)
+        return self._check(fuel.strip(), city.strip())
