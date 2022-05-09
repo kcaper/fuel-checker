@@ -1,6 +1,8 @@
 from .station import FillingStation
+from .wog import WOG
 
 STATIONS = {
+    'wog': WOG
 }
 
 
